@@ -1,7 +1,7 @@
 import React from 'react';
 import withAuth from './hocs/withAuth';
 
-const Profile = props => {
+const Home = props => {
   console.log(props)
   return (
     <div>
@@ -10,4 +10,4 @@ const Profile = props => {
   );
 };
 
-export default withAuth(Profile);
+export default withAuth(Home);
