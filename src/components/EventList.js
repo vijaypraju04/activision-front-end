@@ -15,7 +15,9 @@ class EventList extends Component {
     return _.map(this.props.events, event => {
       return (
         <li className="list-group-item">
+          <Link to={`/events/${event.id}`}>
           {event.title}
+        </Link>
         </li>
       )
     })
@@ -41,7 +43,9 @@ class EventList extends Component {
 }
 
 function mapStateToProps(state) {
-  return {events: state.events}
+  return {
+    events: state.events
+  }
 }
 
-export default connect(mapStateToProps, {fetchEvents})(EventList)
+export default withAuth(connect(mapStateToProps, {fetchEvents})(EventList))

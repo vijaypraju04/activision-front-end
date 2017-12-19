@@ -26,6 +26,22 @@ export const logoutUser = () => {
 const ROOT_URL = "http://localhost:3000/api/v1"
 
 export const FETCH_EVENTS = "FETCH_EVENTS"
+export const CREATE_EVENT = "CREATE_EVENT"
+export const FETCH_CATEGORIES = "FETCH_CATEGORIES"
+export const FETCH_EVENT = "FETCH_EVENT"
+
+export function fetchCategories() {
+  return dispatch => {
+    return fetch(`${ROOT_URL}/categories`)
+    .then(res => res.json())
+    .then(res => {
+      dispatch({
+        type: FETCH_CATEGORIES,
+        payload: res
+      })
+    })
+  }
+}
 
 export function fetchEvents() {
   return dispatch => {
@@ -40,6 +56,39 @@ export function fetchEvents() {
   }
 }
 
+export function createEvent(values, callback) {
+  return dispatch => {
+    // return fetch(`${ROOT_URL}/events`, {}).then(r=>r.json()).then(d=>{debugger})
+    return fetch(`${ROOT_URL}/events`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(values)})
+    .then(res => res.json())
+    .then(res => {
+      dispatch({
+      type: CREATE_EVENT,
+      payload: res
+    })
+  }).then(() => callback())
+
+  }
+}
+
+export function fetchEvent(id) {
+  return dispatch => {
+    return fetch(`${ROOT_URL}/events/${id}`)
+    .then(res => res.json())
+    .then(res => {
+      dispatch({
+        type: FETCH_EVENT,
+        payload: res
+      })
+    })
+  }
+}
 
 
 

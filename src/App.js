@@ -6,6 +6,7 @@ import Home from './Profile';
 import EventList from './components/EventList'
 import UserProfile from './components/UserProfile'
 import NewEvent from './components/NewEvent'
+import EventDetail from './components/EventDetail'
 import * as actions from './actions';
 
 class App extends Component {
@@ -42,6 +43,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/home" component={Home} />
           <Route path="/events/new" component={NewEvent} />
+          <Route path="/events/:id" component={EventDetail} />
           <Route path="/events" component={EventList} />
           <Route path="/profile" component={UserProfile} />
           {/* <Route path="/profile" render={() => <Profile user={this.props.}/>} /> */}
