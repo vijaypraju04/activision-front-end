@@ -14,7 +14,7 @@ export const loginUser = (username, password, history) => dispatch => {
   adapter.auth.login({ username, password }).then(user => {
     localStorage.setItem('token', user.jwt);
     dispatch({ type: 'SET_CURRENT_USER', user });
-    history.push('/profile');
+    history.push('/home');
   });
 };
 
@@ -23,7 +23,28 @@ export const logoutUser = () => {
   return { type: 'LOGOUT_USER' };
 };
 
+const ROOT_URL = "http://localhost:3000/api/v1"
+
+export const FETCH_EVENTS = "FETCH_EVENTS"
+
+export function fetchEvents() {
+  return dispatch => {
+    return fetch(`${ROOT_URL}/events`)
+    .then(res => res.json())
+    .then(res => {
+      dispatch({
+        type: FETCH_EVENTS,
+        payload: res
+      })
+    })
+  }
+}
+
+
+
+
+
 
 /// data down is mapStateToProps
 
-// action up is mapDispatchToProps 
+// action up is mapDispatchToProps
