@@ -7,6 +7,7 @@ import EventList from './components/EventList'
 import UserProfile from './components/UserProfile'
 import NewEvent from './components/NewEvent'
 import EventDetail from './components/EventDetail'
+import NewUser from './components/NewUser'
 import * as actions from './actions';
 
 class App extends Component {
@@ -26,7 +27,14 @@ class App extends Component {
                 Sign Out
               </a>
             ) : (
+              <div>
               <Link to="/login">Go to Login</Link>
+              <div>
+                <li>
+              <Link to="/register">Register Here</Link>
+            </li>
+            </div>
+            </div>
             )}
           </li>
           <li>
@@ -35,9 +43,6 @@ class App extends Component {
           <li>
             <Link to="/events">Go to Events</Link>
           </li>
-          <li>
-            <Link to="/profile">My Profile</Link>
-          </li>
         </ul>
         <Switch>
           <Route path="/login" component={Login} />
@@ -45,7 +50,8 @@ class App extends Component {
           <Route path="/events/new" component={NewEvent} />
           <Route path="/events/:id" component={EventDetail} />
           <Route path="/events" component={EventList} />
-          <Route path="/profile" component={UserProfile} />
+          <Route path="/profile/:id" component={UserProfile} />
+          <Route path="/register" component={NewUser} />
           {/* <Route path="/profile" render={() => <Profile user={this.props.}/>} /> */}
         </Switch>
       </div>

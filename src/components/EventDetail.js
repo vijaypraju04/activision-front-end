@@ -12,6 +12,7 @@ class EventDetail extends Component {
     }
   }
 
+
   render() {
     if (!this.props.event){
       return(

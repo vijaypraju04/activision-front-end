@@ -30,8 +30,9 @@ class NewEvent extends Component {
   }
 
   onSubmit(values) {
+    let userId = this.props.currentUser.currentUser.id
+    values["userId"] = userId
     console.log(values)
-    // this.props.history.push('/events')
     this.props.createEvent(values, () => {
       this.props.history.push('/events')
     })
@@ -50,7 +51,7 @@ class NewEvent extends Component {
     const { handleSubmit } = this.props
     return (
       <div>
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this), this.props.currentUser.currentUser.id)}>
           <div>
             <label>Activist Category</label>
               <Field name="category" component="select">
