@@ -28,6 +28,7 @@ const ROOT_URL = "http://localhost:3000/api/v1"
 export const FETCH_EVENTS = "FETCH_EVENTS"
 export const CREATE_EVENT = "CREATE_EVENT"
 export const FETCH_EVENT = "FETCH_EVENT"
+export const ADD_USER_TO_EVENT = "ADD_USER_TO_EVENT"
 
 export const FETCH_CATEGORIES = "FETCH_CATEGORIES"
 
@@ -108,7 +109,6 @@ export function fetchEvent(id) {
 }
 
 export function createUser(values) {
-  console.log(values)
   return dispatch => {
     // return fetch(`${ROOT_URL}/events`, {}).then(r=>r.json()).then(d=>{debugger})
     return fetch(`${ROOT_URL}/users`, {
@@ -124,6 +124,33 @@ export function createUser(values) {
       type: CREATE_USER,
       payload: res
     })
+  })
+  }
+}
+
+
+export function addUserToEvent(eventId, userId) {
+  return dispatch => {
+    // return fetch(`${ROOT_URL}/events`, {}).then(r=>r.json()).then(d=>{debugger})
+    return fetch(`${ROOT_URL}/user_events`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({user_event: {event_id: eventId, user_id: userId}})
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (!res.error) {
+        console.log('1234', res)
+        dispatch({
+          type: ADD_USER_TO_EVENT,
+          payload: res
+        })
+      } else {
+        console.log('error')
+      }
   })
   }
 }
