@@ -34,6 +34,62 @@ export const FETCH_CATEGORIES = "FETCH_CATEGORIES"
 
 export const CREATE_USER = "CREATE_USER"
 export const FETCH_USER_DATA = "FETCH_USER_DATA"
+export const FOLLOW_USER = "FOLLOW_USER"
+export const REMOVE_FOLLOW = "REMOVE_FOLLOW"
+
+export function removeFollow(followingUser, currentUser) {
+  return dispatch => {
+    // return fetch(`${ROOT_URL}/events`, {}).then(r=>r.json()).then(d=>{debugger})
+    return fetch(`${ROOT_URL}/relationships/unfollow`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({relationship: {followed_id: followingUser, follower_id: currentUser}})
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (!res.error) {
+        console.log('1234', res)
+        dispatch({
+          type: REMOVE_FOLLOW,
+          payload: res
+        })
+      } else {
+        console.log('error')
+      }
+  })
+  }
+}
+
+
+export function followUser(followingUser, currentUser) {
+  return dispatch => {
+    // return fetch(`${ROOT_URL}/events`, {}).then(r=>r.json()).then(d=>{debugger})
+    // FOR AUTH ---> "Authorization": `Token ${localStorage.getItem("token")}`
+    return fetch(`${ROOT_URL}/relationships`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({relationship: {followed_id: followingUser, follower_id: currentUser}})
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (!res.error) {
+        console.log('1234', res)
+        dispatch({
+          type: FOLLOW_USER,
+          payload: res
+        })
+      } else {
+        console.log('error')
+      }
+  })
+  }
+}
 
 export function fetchCategories() {
   return dispatch => {

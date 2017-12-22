@@ -11,7 +11,7 @@ const Home = props => {
       <Link to={`/profile/${userId}`}>
       Your Profile
     </Link>
-      <h1>Congrats {props.user.username} You are Logged In </h1>
+      <h1>Congrats {props.user.currentUser.username} You are Logged In </h1>
     </div>
   );
 };

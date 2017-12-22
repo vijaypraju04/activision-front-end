@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import withAuth from '../hocs/withAuth';
-import { fetchUserData } from '../actions'
+import { fetchUserData, followUser, removeFollow } from '../actions'
 
 class UserProfile extends Component {
   componentDidMount() {
@@ -10,7 +10,24 @@ class UserProfile extends Component {
       this.props.fetchUserData(this.props.match.params.id)
   }
 
+  addFollow = () => {
+    console.log(this.props)
+    const followingUser = this.props.profile
+    const currentUser = this.props.user
+    console.log("followerId", followingUser.id, "userId", currentUser.id)
+    this.props.followUser(followingUser.id, currentUser.id)
+  }
+
+  removeUserFollow = () => {
+    console.log(this.props)
+    const otherUser = this.props.profile
+    const thisUser = this.props.user
+    console.log("followerId", otherUser.id, "userId", thisUser.id)
+    this.props.removeFollow(otherUser.id, thisUser.id)
+  }
+
   render() {
+    console.log(this.props.follow)
     return (
       <div>
         {this.props.profile ? <h1>Username: {this.props.profile.username}</h1> : <h1>LOADING...</h1>}
@@ -25,6 +42,10 @@ class UserProfile extends Component {
     <div>
       {this.props.profile ? <p>Bio: {this.props.profile.bio}</p> : <h1>LOADING...</h1>}
     </div>
+    <div>
+      <button onClick={this.addFollow}>Follow</button>
+      <button onClick={this.removeUserFollow}>Unfollow</button>
+    </div>
       </div>
     )
   }
@@ -36,8 +57,9 @@ class UserProfile extends Component {
 
 function mapStateToProps(state) {
   return {
-    profile: state.auth.userProfile
+    profile: state.auth.userProfile,
+    follow: state.auth
   }
 }
 
-export default withAuth(connect(mapStateToProps, {fetchUserData}) (UserProfile))
+export default withAuth(connect(mapStateToProps, {fetchUserData, followUser, removeFollow}) (UserProfile))
