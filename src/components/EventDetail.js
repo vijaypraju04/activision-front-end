@@ -4,6 +4,7 @@ import { fetchEvent, addUserToEvent } from '../actions'
 import { Link } from 'react-router-dom'
 import withAuth from '../hocs/withAuth';
 import EventUserList from './EventUserList'
+import MapContainer from './MapLocation'
 
 class EventDetail extends Component {
 
@@ -50,6 +51,7 @@ class EventDetail extends Component {
         <h6>{event.time}</h6>
         <button onClick={this.attendEvent}>Attend Event</button>
         <EventUserList userList={this.props.event.users}/>
+        <MapContainer area={this.props.event}/>
       </div>
     );
   }

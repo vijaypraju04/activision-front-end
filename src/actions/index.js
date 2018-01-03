@@ -23,7 +23,11 @@ export const logoutUser = () => {
   return { type: 'LOGOUT_USER' };
 };
 
+
+
 const ROOT_URL = "http://localhost:3000/api/v1"
+let GOOGLE_MAPS_URL = `https://maps.googleapis.com/maps/api/geocode/json?address=`
+const apiKey = "AIzaSyCgsK8LBQfMgK9mfDR8UbemUVokERlYOCY"
 
 export const FETCH_EVENTS = "FETCH_EVENTS"
 export const CREATE_EVENT = "CREATE_EVENT"
@@ -36,6 +40,46 @@ export const CREATE_USER = "CREATE_USER"
 export const FETCH_USER_DATA = "FETCH_USER_DATA"
 export const FOLLOW_USER = "FOLLOW_USER"
 export const REMOVE_FOLLOW = "REMOVE_FOLLOW"
+
+
+
+
+
+// export function createEvent(values, callback) {
+//   return dispatch => {
+//     // return fetch(`${ROOT_URL}/events`, {}).then(r=>r.json()).then(d=>{debugger})
+//     return fetch(`${ROOT_URL}/events`, {
+//     method: 'POST',
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(values)})
+//     .then(res => res.json())
+//     .then(res => {
+//       dispatch({
+//       type: CREATE_EVENT,
+//       payload: res
+//     })
+//   }).then(() => callback())
+//
+//   }
+// }
+
+// export function createEvent(values, callback) {
+//   return dispatch => {
+//     return fetch()
+//   }
+// }
+
+
+
+
+
+
+
+
+
 
 export function removeFollow(followingUser, currentUser) {
   return dispatch => {
@@ -130,26 +174,54 @@ export function fetchEvents() {
   }
 }
 
-export function createEvent(values, callback) {
+// export function createEvent(values, callback) {
+//   return dispatch => {
+//     // return fetch(`${ROOT_URL}/events`, {}).then(r=>r.json()).then(d=>{debugger})
+//     return fetch(`${ROOT_URL}/events`, {
+//     method: 'POST',
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(values)})
+//     .then(res => res.json())
+//     .then(res => {
+//       dispatch({
+//       type: CREATE_EVENT,
+//       payload: res
+//     })
+//   }).then(() => callback())
+//
+//   }
+// }
+
+// const address = "Seattle"
+//
+export function createEvent(values, address, callback) {
   return dispatch => {
-    // return fetch(`${ROOT_URL}/events`, {}).then(r=>r.json()).then(d=>{debugger})
-    return fetch(`${ROOT_URL}/events`, {
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=+${address}&key=${apiKey}`).then(res => res.json()).then(json =>{
+
+    const area = json.results[0].geometry.location
+    fetch(`${ROOT_URL}/events`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(values)})
-    .then(res => res.json())
-    .then(res => {
-      dispatch({
+    body: JSON.stringify({area, values})
+  }).then(res => res.json())
+  .then(res => {
+    dispatch({
       type: CREATE_EVENT,
       payload: res
     })
   }).then(() => callback())
-
+})
   }
 }
+
+
+// .then(() => callback())
 
 export function fetchEvent(id) {
   return dispatch => {

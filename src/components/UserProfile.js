@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import withAuth from '../hocs/withAuth';
-import { fetchUserData, followUser, removeFollow } from '../actions'
+import UserEvents from './UserEvents'
+import { fetchUserData, followUser, removeFollow} from '../actions'
 
 class UserProfile extends Component {
   componentDidMount() {
@@ -28,12 +29,13 @@ class UserProfile extends Component {
 
   render() {
     console.log(this.props.follow)
+    console.log(this.props.profile)
     return (
       <div>
         {this.props.profile ? <h1>Username: {this.props.profile.username}</h1> : <h1>LOADING...</h1>}
         <div>
           <div>
-            {this.props.profile ? <img src={this.props.profile.picture}/> : <h1>LOADING...</h1>}
+            {this.props.profile ? <img src={this.props.profile.picture} /> : <h1>LOADING...</h1>}
           </div>
         {this.props.profile ? <h5>{this.props.profile.first_name}</h5> : <h1>LOADING...</h1>}
         {this.props.profile ? <h5>{this.props.profile.last_name}</h5> : <h1>LOADING...</h1>}
@@ -45,6 +47,12 @@ class UserProfile extends Component {
     <div>
       <button onClick={this.addFollow}>Follow</button>
       <button onClick={this.removeUserFollow}>Unfollow</button>
+    </div>
+    <div>
+      <UserEvents userEvents={this.props.profile}/>
+    </div>
+    <div>
+      {/* <DataChart /> */}
     </div>
       </div>
     )

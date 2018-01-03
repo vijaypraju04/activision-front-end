@@ -4,8 +4,12 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
+    "chart.js": "^2.7.1",
+    "google-maps-react": "^1.1.2",
     "lodash": "^4.17.4",
     "react": "^16.2.0",
+    "react-balloon": "^0.2.5",
+    "react-chartjs-2": "^2.6.4",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",

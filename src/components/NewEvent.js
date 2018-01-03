@@ -33,8 +33,12 @@ class NewEvent extends Component {
     let userId = this.props.currentUser.currentUser.id
     values["userId"] = userId
     console.log(values)
-    this.props.createEvent(values, () => {
+    let address = values.address
+    // let addressObj = {address: address}
+    // console.log(addressObj)
+    this.props.createEvent(values, address, () => {
       this.props.history.push('/events')
+      // this.props.mapLocation(locationInput)
     })
   }
 
