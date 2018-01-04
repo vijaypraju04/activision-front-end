@@ -3,12 +3,34 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import withAuth from '../hocs/withAuth';
 import UserEvents from './UserEvents'
-import { fetchUserData, followUser, removeFollow} from '../actions'
+import UserData from './UserDataChart'
+import { fetchUserData, followUser, removeFollow, fetchCategoryList} from '../actions'
 
 class UserProfile extends Component {
   componentDidMount() {
     // console.log(this.props.match.params.id)
       this.props.fetchUserData(this.props.match.params.id)
+      this.props.fetchCategoryList()
+      // console.log("NOW", this.props)
+  }
+
+  hideButtons = () => {
+    const currentUser = this.props.user
+    // console.log("BEFORE ARIEL", this.props.match.params.id)
+    // console.log("ARIEL", currentUser.id)
+    if (this.props.match.params.id == currentUser.id) {
+      return (
+        <div>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+            <button onClick={this.addFollow}>Follow</button>
+            <button onClick={this.removeUserFollow}>Unfollow</button>
+          </div>
+        )
+    }
   }
 
   addFollow = () => {
@@ -28,8 +50,9 @@ class UserProfile extends Component {
   }
 
   render() {
-    console.log(this.props.follow)
+    console.log("FOLLOW DATA", this.props.follow)
     console.log(this.props.profile)
+    console.log(this.props.categories)
     return (
       <div>
         {this.props.profile ? <h1>Username: {this.props.profile.username}</h1> : <h1>LOADING...</h1>}
@@ -45,14 +68,13 @@ class UserProfile extends Component {
       {this.props.profile ? <p>Bio: {this.props.profile.bio}</p> : <h1>LOADING...</h1>}
     </div>
     <div>
-      <button onClick={this.addFollow}>Follow</button>
-      <button onClick={this.removeUserFollow}>Unfollow</button>
+      {this.hideButtons()}
     </div>
     <div>
       <UserEvents userEvents={this.props.profile}/>
     </div>
     <div>
-      {/* <DataChart /> */}
+      {this.props.categories ? <UserData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
     </div>
       </div>
     )
@@ -66,8 +88,10 @@ class UserProfile extends Component {
 function mapStateToProps(state) {
   return {
     profile: state.auth.userProfile,
-    follow: state.auth
+    follow: state.auth,
+    categories: state.categories,
+    loggedIn: !!state.auth.currentUser.id
   }
 }
 
-export default withAuth(connect(mapStateToProps, {fetchUserData, followUser, removeFollow}) (UserProfile))
+export default withAuth(connect(mapStateToProps, {fetchUserData, followUser, removeFollow, fetchCategoryList}) (UserProfile))

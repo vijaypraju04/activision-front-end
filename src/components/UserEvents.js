@@ -6,7 +6,7 @@ const UserEvents = (props) => {
     return <div> Loading </div>
   }
 
-  console.log(props.userEvents.events)
+  // console.log(props.userEvents.events)
   const events = props.userEvents.events.map((event) => {
       return (
         <li>

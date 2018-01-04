@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from './Login';
 import Home from './Profile';
@@ -11,6 +11,32 @@ import NewUser from './components/NewUser'
 import * as actions from './actions';
 
 class App extends Component {
+
+  userLogged = () => {
+    const userId = this.props.user.currentUser.id
+    // console.log("BEFORE ARIEL", this.props.match.params.id)
+    // console.log("ARIEL", currentUser.id)
+    if (this.props.loggedIn == true) {
+      return (
+        <div>
+          <li>
+          <Link to={`/profile/${userId}`}>
+          Your Profile
+        </Link>
+      </li>
+      <li>
+        <Link to="/events">Go to Events</Link>
+      </li>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          </div>
+        )
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -37,28 +63,34 @@ class App extends Component {
             </div>
             )}
           </li>
-          <li>
-            <Link to="/home">Go to Home</Link>
-          </li>
-          <li>
-            <Link to="/events">Go to Events</Link>
-          </li>
+          {/* <li>
+            <Link to="/home">Go to Profile</Link>
+          </li> */}
+          <div>
+            {this.userLogged()}
+          </div>
+          {/* <li>
+          <Link to={`/profile/${userId}`}>
+          Your Profile
+        </Link>
+      </li> */}
         </ul>
         <Switch>
           <Route path="/login" component={Login} />
-          <Route path="/home" component={Home} />
+          {/* <Route path="/home" component={Home} /> */}
           <Route path="/events/new" component={NewEvent} />
           <Route path="/events/:id" component={EventDetail} />
           <Route path="/events" component={EventList} />
           <Route path="/profile/:id" component={UserProfile} />
           <Route path="/register" component={NewUser} />
-          {/* <Route path="/profile" render={() => <Profile user={this.props.}/>} /> */}
+          {/* <Route path="/profile/:id" render={() => <UserProfile loggedIn={this.props.loggedIn}/>} /> */}
         </Switch>
       </div>
     );
   }
 }
 const mapStateToProps = state => ({
-  loggedIn: !!state.auth.currentUser.id
+  loggedIn: !!state.auth.currentUser.id,
+  user: state.auth
 });
 export default connect(mapStateToProps, actions)(App);

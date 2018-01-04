@@ -8,16 +8,18 @@ const Home = props => {
   console.log(userId)
   return (
     <div>
+      {/* <li>
       <Link to={`/profile/${userId}`}>
       Your Profile
     </Link>
+  </li> */}
       <h1>Congrats {props.user.currentUser.username} You are Logged In </h1>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  user: state.auth,
+  user: state.auth
 })
 
 export default withAuth(connect(mapStateToProps) (Home))

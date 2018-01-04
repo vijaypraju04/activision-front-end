@@ -14,7 +14,7 @@ export const loginUser = (username, password, history) => dispatch => {
   adapter.auth.login({ username, password }).then(user => {
     localStorage.setItem('token', user.jwt);
     dispatch({ type: 'SET_CURRENT_USER', user });
-    history.push('/home');
+    history.push('/events');
   });
 };
 
@@ -40,6 +40,7 @@ export const CREATE_USER = "CREATE_USER"
 export const FETCH_USER_DATA = "FETCH_USER_DATA"
 export const FOLLOW_USER = "FOLLOW_USER"
 export const REMOVE_FOLLOW = "REMOVE_FOLLOW"
+export const FETCH_CATEGORY_LIST = "FETCH_CATEGORY_LIST"
 
 
 
@@ -142,6 +143,19 @@ export function fetchCategories() {
     .then(res => {
       dispatch({
         type: FETCH_CATEGORIES,
+        payload: res
+      })
+    })
+  }
+}
+
+export function fetchCategoryList() {
+  return dispatch => {
+    return fetch(`${ROOT_URL}/categories`)
+    .then(res => res.json())
+    .then(res => {
+      dispatch({
+        type: FETCH_CATEGORY_LIST,
         payload: res
       })
     })
