@@ -4,14 +4,36 @@ import { Link } from 'react-router-dom'
 import withAuth from '../hocs/withAuth';
 import UserEvents from './UserEvents'
 import UserData from './UserDataChart'
+import UserFollowers from './UserFollowers'
 import { fetchUserData, followUser, removeFollow, fetchCategoryList} from '../actions'
 
 class UserProfile extends Component {
+
+  state = {
+    id: null
+  }
+
   componentDidMount() {
     // console.log(this.props.match.params.id)
-      this.props.fetchUserData(this.props.match.params.id)
-      this.props.fetchCategoryList()
+    const id =this.props.match.params.id
+    this.setState({id})
+    this.getUserPageData()
+    // console.log("NOW", this.props)
+  }
+
+  componentWillReceiveProps(nextP) {
+    // console.log(this.props.match.params.id)
+
+    const id =nextP.id
+    if (this.state.id != id) {
+      this.setState({id},this.getUserPageData)
+    }
       // console.log("NOW", this.props)
+  }
+
+  getUserPageData = () =>{
+    this.props.fetchUserData(this.props.match.params.id)
+    this.props.fetchCategoryList()
   }
 
   hideButtons = () => {
@@ -50,9 +72,10 @@ class UserProfile extends Component {
   }
 
   render() {
-    console.log("FOLLOW DATA", this.props.follow)
+    console.log("FOLLOW DATA", this.props.profile)
     console.log(this.props.profile)
     console.log(this.props.categories)
+    // debugger
     return (
       <div>
         {this.props.profile ? <h1>Username: {this.props.profile.username}</h1> : <h1>LOADING...</h1>}
@@ -75,6 +98,10 @@ class UserProfile extends Component {
     </div>
     <div>
       {this.props.categories ? <UserData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
+    </div>
+    <div>
+      {this.props.profile ? <UserFollowers followData={this.props.profile}/> :
+    <h1>LOADING...</h1>}
     </div>
       </div>
     )

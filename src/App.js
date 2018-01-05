@@ -81,7 +81,11 @@ class App extends Component {
           <Route path="/events/new" component={NewEvent} />
           <Route path="/events/:id" component={EventDetail} />
           <Route path="/events" component={EventList} />
-          <Route path="/profile/:id" component={UserProfile} />
+          <Route path="/profile/:id" render={router=>{
+            // debugger
+            const id  = router.match.params.id
+            return<UserProfile  id={id} match={router.match}/>
+          }} />
           <Route path="/register" component={NewUser} />
           {/* <Route path="/profile/:id" render={() => <UserProfile loggedIn={this.props.loggedIn}/>} /> */}
         </Switch>

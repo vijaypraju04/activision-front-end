@@ -98,7 +98,7 @@ export function removeFollow(followingUser, currentUser) {
       if (!res.error) {
         console.log('1234', res)
         dispatch({
-          type: REMOVE_FOLLOW,
+          type: FETCH_USER_DATA,
           payload: res
         })
       } else {
@@ -123,10 +123,11 @@ export function followUser(followingUser, currentUser) {
   })
     .then(res => res.json())
     .then(res => {
+      debugger
       if (!res.error) {
         console.log('1234', res)
         dispatch({
-          type: FOLLOW_USER,
+          type: FETCH_USER_DATA,
           payload: res
         })
       } else {
