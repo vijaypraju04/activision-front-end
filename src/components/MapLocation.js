@@ -8,7 +8,7 @@ render(props) {
       <Map
           google={this.props.google}
           zoom={10}
-          style={{width: '50%', height: '50%', position: 'relative'}}
+          style={{width: '100%', height: '100%', position: 'relative'}}
           // initialCenter=({
           //   lat: this.state.lat
           //   lng: this.state.lng

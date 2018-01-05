@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import withAuth from '../hocs/withAuth';
 import EventUserList from './EventUserList'
 import MapContainer from './MapLocation'
+import { Grid, Segment } from 'semantic-ui-react'
 
 class EventDetail extends Component {
 
@@ -41,18 +42,35 @@ class EventDetail extends Component {
     // this.props === ownProps these are equal to each other
     // events[this.props.match.params.id]
     return (
-      <div>
-        <Link to="/events">Back to Event list</Link>
+      <Grid columns={3} divided textAlign='center'>
+        <Grid.Row stretched>
+          <Grid.Column>
+            <Segment>
+        <MapContainer area={this.props.event}/>
+      </Segment>
+    </Grid.Column>
+    <Grid.Column>
+      <Segment>
         <h3>{event.title}</h3>
         <p>{event.description}</p>
+      </Segment>
+      <Segment>
         <h6>{event.location}</h6>
         <h6>{event.address}</h6>
         <h6>{event.date}</h6>
         <h6>{event.time}</h6>
+      </Segment>
+      <Segment>
         <button onClick={this.attendEvent}>Attend Event</button>
+      </Segment>
+    </Grid.Column>
+    <Grid.Column>
+      <Segment>
         <EventUserList userList={this.props.event.users}/>
-        <MapContainer area={this.props.event}/>
-      </div>
+      </Segment>
+    </Grid.Column>
+  </Grid.Row>
+  </Grid>
     );
   }
 }

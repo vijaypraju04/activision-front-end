@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import withAuth from '../hocs/withAuth';
 import UserEvents from './UserEvents'
-import UserData from './UserDataChart'
+import UserPieData from './UserDataChart'
+import UserBarData from './UserDataBar'
 import UserFollowers from './UserFollowers'
 import UserFollowings from './UserFollowings'
 import { fetchUserData, followUser, removeFollow, fetchCategoryList} from '../actions'
+import { Grid, Segment, Image, Header } from 'semantic-ui-react'
 
 class UserProfile extends Component {
 
@@ -43,15 +45,14 @@ class UserProfile extends Component {
     // console.log("ARIEL", currentUser.id)
     if (this.props.match.params.id == currentUser.id) {
       return (
-        <div>
-        </div>
+      null
       )
     } else {
       return (
-        <div>
+        <Segment>
             <button onClick={this.addFollow}>Follow</button>
             <button onClick={this.removeUserFollow}>Unfollow</button>
-          </div>
+          </Segment>
         )
     }
   }
@@ -73,54 +74,62 @@ class UserProfile extends Component {
   }
 
   render() {
+    if (!this.props.profile){
+      return(
+        <div>Loading</div>
+      )
+    }
     console.log("FOLLOW DATA", this.props.profile)
     console.log("ALMOST DONE", this.props.profile)
     console.log(this.props.categories)
     // debugger
     return (
-      <div>
-        {this.props.profile ? <h1>Username: {this.props.profile.username}</h1> : <h1>LOADING...</h1>}
-        <div>
-          <div>
-            {this.props.profile ? <img src={this.props.profile.picture} /> : <h1>LOADING...</h1>}
-          </div>
-        {this.props.profile ? <h5>{this.props.profile.first_name}</h5> : <h1>LOADING...</h1>}
-        {this.props.profile ? <h5>{this.props.profile.last_name}</h5> : <h1>LOADING...</h1>}
-        {this.props.profile ? <h1>Email: {this.props.profile.email}</h1> : <h1>LOADING...</h1>}
-      </div>
-    <div>
-      {this.props.profile ? <p>Bio: {this.props.profile.bio}</p> : <h1>LOADING...</h1>}
-    </div>
-    <div>
+      <Grid textAlign='center' columns={3} divided>
+        <Grid.Row stretched>
+          <Grid.Column>
+            <Segment>
+        <Header size="huge" textAlign='center'>
+        {this.props.profile.username}
+      </Header>
+            <Image src={this.props.profile.picture} circular size='large' centered />
+            <p>{this.props.profile.bio}</p>
+          </Segment>
+          <Segment>
+            <UserEvents userEvents={this.props.profile}/>
+          </Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment>
+            {this.props.categories ? <UserPieData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
+          </Segment>
+          <Segment>
+            {this.props.categories ? <UserBarData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
+          </Segment>
+        </Grid.Column>
+          <Grid.Column>
+            <Segment>
+        <h5>{this.props.profile.first_name}</h5>
+        <h5>{this.props.profile.last_name}</h5>
+        <h1>Email: {this.props.profile.email}</h1>
+      </Segment>
       {this.hideButtons()}
-    </div>
-    <div>
+    {/* <div>
       <UserEvents userEvents={this.props.profile}/>
-    </div>
-    <div>
+    </div> */}
+    {/* <div>
       {this.props.categories ? <UserData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
-    </div>
-    <div>
+    </div> */}
+    <Segment>
       {this.props.profile ?
-        <div>
-        <h1> Follower Count {this.props.profile.followers.length} </h1>
-        <Link to={`/profile/${this.props.profile.id}/followers`}>Followers</Link> </div> :
+        <Link to={`/profile/${this.props.profile.id}/followers`}><h1>Followers: {this.props.profile.followers.length}</h1></Link> :
     <h1>LOADING...</h1>}
     {this.props.profile ?
-      <div>
-    <h1> Following Count {this.props.profile.following.length} </h1>
-    <Link to={`/profile/${this.props.profile.id}/following`}>Following</Link> </div> :
+    <Link to={`/profile/${this.props.profile.id}/following`}><h1>Following: {this.props.profile.following.length}</h1></Link> :
     <h1>LOADING...</h1>}
-    </div>
-    {/* <div>
-
-      {this.props.profile ? <UserFollowings /> :
-    <h1>LOADING...</h1>}
-    </div> */}
-    <div>
-
-    </div>
-      </div>
+  </Segment>
+</Grid.Column>
+</Grid.Row>
+</Grid>
     )
   }
 }

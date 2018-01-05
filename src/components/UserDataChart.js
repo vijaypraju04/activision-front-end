@@ -1,7 +1,7 @@
 import React from "react";
 import { Bar, Doughnut, Pie } from "react-chartjs-2";
 
-const UserData = props => {
+const UserPieData = props => {
 
   if (!props.categoryArray){
     return <div> Loading </div>
@@ -114,4 +114,4 @@ return newObjValues
 
 }
 
-export default UserData;
+export default UserPieData;

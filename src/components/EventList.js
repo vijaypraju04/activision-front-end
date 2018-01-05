@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import withAuth from '../hocs/withAuth';
 import { fetchEvents } from '../actions'
+import { Button, Icon, Image as ImageComponent, Item, Label } from 'semantic-ui-react'
 import _ from 'lodash'
 
 class EventList extends Component {
@@ -12,13 +13,29 @@ class EventList extends Component {
   }
 
   renderEvents() {
+    console.log(this.props.events)
     return _.map(this.props.events, event => {
       return (
-        <li className="list-group-item">
+        // <li className="list-group-item">
+          <Item>
+          <Item.Image size='small' src={event.picture} />
+          <Item.Content>
+          <Item.Header as='a'>{event.title}</Item.Header>
+
+          <Item.Description verticalAlign='middle'>
+            <p>Location: {event.location}</p>
+            <p>Date: {event.date}</p>
+        </Item.Description>
+        <Item.Extra>
           <Link to={`/events/${event.id}`}>
-          {event.title}
-        </Link>
-        </li>
+  <Button primary floated='right'>
+    Interested
+    <Icon name='right chevron' />
+  </Button>
+  </Link>
+</Item.Extra>
+      </Item.Content>
+    </Item>
       )
     })
   }
@@ -29,13 +46,13 @@ class EventList extends Component {
     return (
       <div>
         <div className="text-sx-right">
-          <Link className="btn btn-primary" to="/events/new">
+          {/* <Link className="btn btn-primary" to="/events/new">
             Create Event
-          </Link>
+          </Link> */}
         <h3> Events </h3>
-          <ul className="list-group">
+          <Item.Group divided>
             {this.renderEvents()}
-          </ul>
+          </Item.Group>
       </div>
     </div>
     )

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button, Menu } from 'semantic-ui-react'
 import Login from './Login';
 import Home from './Profile';
 import EventList from './components/EventList'
@@ -20,16 +21,33 @@ class App extends Component {
     // console.log("ARIEL", currentUser.id)
     if (this.props.loggedIn == true) {
       return (
-        <div>
-          <li>
+        <Menu inverted size='huge'>
+          <Menu.Item as='a'>
           <Link to={`/profile/${userId}`}>
           Your Profile
         </Link>
-      </li>
-      <li>
+      </Menu.Item>
+      <Menu.Item link>
         <Link to="/events">Go to Events</Link>
-      </li>
-        </div>
+      </Menu.Item>
+      <Menu.Item link>
+      <Link to="/events/new">
+        Create Event
+      </Link>
+    </Menu.Item>
+      <Menu.Menu position='right'>
+      <Menu.Item link>
+        <Button primary
+        onClick={e => {
+          e.preventDefault();
+          this.props.logoutUser();
+        }}
+      >
+        Sign Out
+      </Button>
+      </Menu.Item>
+    </Menu.Menu>
+    </Menu>
       )
     } else {
       return (
@@ -45,28 +63,19 @@ class App extends Component {
         <h2> ActiVision {this.props.loggedIn ? (
           <h2> Welcome {this.props.user.currentUser.username} </h2> ) : null}
         </h2>
-        <ul>
-          <li>
             {this.props.loggedIn ? (
-              <a
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.logoutUser();
-                }}
-              >
-                Sign Out
-              </a>
+null
             ) : (
-              <div>
+              <Menu inverted size='huge'>
+                <Menu.Item as='a'>
               <Link to="/login">Go to Login</Link>
-              <div>
-                <li>
+                </Menu.Item>
+               <Menu.Item link>
               <Link to="/register">Register Here</Link>
-            </li>
-            </div>
-            </div>
+            </Menu.Item>
+          </Menu>
+
             )}
-          </li>
           {/* <li>
             <Link to="/home">Go to Profile</Link>
           </li> */}
@@ -78,7 +87,6 @@ class App extends Component {
           Your Profile
         </Link>
       </li> */}
-        </ul>
         <Switch>
           <Route path="/login" component={Login} />
           {/* <Route path="/home" component={Home} /> */}
