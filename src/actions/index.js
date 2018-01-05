@@ -123,7 +123,6 @@ export function followUser(followingUser, currentUser) {
   })
     .then(res => res.json())
     .then(res => {
-      debugger
       if (!res.error) {
         console.log('1234', res)
         dispatch({

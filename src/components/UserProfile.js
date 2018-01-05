@@ -5,6 +5,7 @@ import withAuth from '../hocs/withAuth';
 import UserEvents from './UserEvents'
 import UserData from './UserDataChart'
 import UserFollowers from './UserFollowers'
+import UserFollowings from './UserFollowings'
 import { fetchUserData, followUser, removeFollow, fetchCategoryList} from '../actions'
 
 class UserProfile extends Component {
@@ -73,7 +74,7 @@ class UserProfile extends Component {
 
   render() {
     console.log("FOLLOW DATA", this.props.profile)
-    console.log(this.props.profile)
+    console.log("ALMOST DONE", this.props.profile)
     console.log(this.props.categories)
     // debugger
     return (
@@ -100,8 +101,24 @@ class UserProfile extends Component {
       {this.props.categories ? <UserData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
     </div>
     <div>
-      {this.props.profile ? <UserFollowers followData={this.props.profile}/> :
+      {this.props.profile ?
+        <div>
+        <h1> Follower Count {this.props.profile.followers.length} </h1>
+        <Link to={`/profile/${this.props.profile.id}/followers`}>Followers</Link> </div> :
     <h1>LOADING...</h1>}
+    {this.props.profile ?
+      <div>
+    <h1> Following Count {this.props.profile.following.length} </h1>
+    <Link to={`/profile/${this.props.profile.id}/following`}>Following</Link> </div> :
+    <h1>LOADING...</h1>}
+    </div>
+    {/* <div>
+
+      {this.props.profile ? <UserFollowings /> :
+    <h1>LOADING...</h1>}
+    </div> */}
+    <div>
+
     </div>
       </div>
     )
@@ -115,7 +132,6 @@ class UserProfile extends Component {
 function mapStateToProps(state) {
   return {
     profile: state.auth.userProfile,
-    follow: state.auth,
     categories: state.categories,
     loggedIn: !!state.auth.currentUser.id
   }
