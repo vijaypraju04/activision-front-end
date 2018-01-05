@@ -14,7 +14,7 @@ export const loginUser = (username, password, history) => dispatch => {
   adapter.auth.login({ username, password }).then(user => {
     localStorage.setItem('token', user.jwt);
     dispatch({ type: 'SET_CURRENT_USER', user });
-    history.push('/home');
+    history.push('/news');
   });
 };
 
@@ -28,6 +28,8 @@ export const logoutUser = () => {
 const ROOT_URL = "http://localhost:3000/api/v1"
 let GOOGLE_MAPS_URL = `https://maps.googleapis.com/maps/api/geocode/json?address=`
 const apiKey = "AIzaSyCgsK8LBQfMgK9mfDR8UbemUVokERlYOCY"
+const newsApiKey = '49378708932e4cee9b53b3423d68ff90'
+const url = 'https://newsapi.org/v2/top-headlines?' + 'sources=bbc-news&' + 'apiKey=49378708932e4cee9b53b3423d68ff90';
 
 export const FETCH_EVENTS = "FETCH_EVENTS"
 export const CREATE_EVENT = "CREATE_EVENT"
@@ -41,9 +43,22 @@ export const FETCH_USER_DATA = "FETCH_USER_DATA"
 export const FOLLOW_USER = "FOLLOW_USER"
 export const REMOVE_FOLLOW = "REMOVE_FOLLOW"
 export const FETCH_CATEGORY_LIST = "FETCH_CATEGORY_LIST"
+export const FETCH_ARTICLES = "FETCH_ARTICLES"
 
 
 
+export function fetchArticles() {
+  return dispatch => {
+    return fetch(url)
+    .then(res => res.json())
+    .then(res => {
+      dispatch({
+        type: FETCH_ARTICLES,
+        payload: res
+      })
+    })
+  }
+}
 
 
 // export function createEvent(values, callback) {

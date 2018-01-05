@@ -100,7 +100,7 @@ return newObjValues
   const options = {
     title:{
       display:true,
-      text: 'Social Activist Tracker',
+      text: 'Activist Frequency',
       fontSize: 25
     },
     legend: {

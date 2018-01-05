@@ -1,4 +1,4 @@
-import { FETCH_USER_DATA, FOLLOW_USER } from '../actions'
+import { FETCH_USER_DATA, FOLLOW_USER, FETCH_ARTICLES } from '../actions'
 
 const initialState = { currentUser: {} };
 
@@ -13,6 +13,8 @@ const authReducer = (state = initialState, action) => {
     // case FOLLOW_USER:
     //   console.log(action.payload.username)
     //   return { ...state, followingUser: action.payload.username}
+    case FETCH_ARTICLES:
+      return { ...state, articleData: action.payload }
     case 'SET_CURRENT_USER':
     console.log("in the reducer!")
       const { id, username } = action.user;

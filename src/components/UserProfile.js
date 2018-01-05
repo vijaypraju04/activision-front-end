@@ -95,9 +95,8 @@ class UserProfile extends Component {
             <p>{this.props.profile.bio}</p>
           </Segment>
             <Segment>
-        <h5>{this.props.profile.first_name}</h5>
-        <h5>{this.props.profile.last_name}</h5>
-        <h1>Email: {this.props.profile.email}</h1>
+        <h3>{this.props.profile.first_name} {this.props.profile.last_name}</h3>
+        <h3>Email: {this.props.profile.email}</h3>
       {this.hideButtons()}
     {/* <div>
       <UserEvents userEvents={this.props.profile}/>

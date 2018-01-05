@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button, Menu } from 'semantic-ui-react'
+import { Button, Menu, Header } from 'semantic-ui-react'
 import Login from './Login';
 import Home from './Profile';
 import EventList from './components/EventList'
@@ -34,6 +34,9 @@ class App extends Component {
       <Link to="/events/new">
         Create Event
       </Link>
+    </Menu.Item>
+    <Menu.Item link>
+      <Link to="/news">News</Link>
     </Menu.Item>
       <Menu.Menu position='right'>
       <Menu.Item link>
@@ -76,9 +79,6 @@ null
           </Menu>
 
             )}
-          {/* <li>
-            <Link to="/home">Go to Profile</Link>
-          </li> */}
           <div>
             {this.userLogged()}
           </div>
@@ -88,6 +88,7 @@ null
         </Link>
       </li> */}
         <Switch>
+          <Route path="/news" component={Home} />
           <Route path="/login" component={Login} />
           {/* <Route path="/home" component={Home} /> */}
           <Route path="/events/new" component={NewEvent} />
