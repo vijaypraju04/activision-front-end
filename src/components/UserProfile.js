@@ -94,9 +94,24 @@ class UserProfile extends Component {
             <Image src={this.props.profile.picture} circular size='large' centered />
             <p>{this.props.profile.bio}</p>
           </Segment>
-          <Segment>
-            <UserEvents userEvents={this.props.profile}/>
-          </Segment>
+            <Segment>
+        <h5>{this.props.profile.first_name}</h5>
+        <h5>{this.props.profile.last_name}</h5>
+        <h1>Email: {this.props.profile.email}</h1>
+      {this.hideButtons()}
+    {/* <div>
+      <UserEvents userEvents={this.props.profile}/>
+    </div> */}
+    {/* <div>
+      {this.props.categories ? <UserData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
+    </div> */}
+      {this.props.profile ?
+        <Link to={`/profile/${this.props.profile.id}/followers`}><h1>Followers: {this.props.profile.followers.length}</h1></Link> :
+    <h1>LOADING...</h1>}
+    {this.props.profile ?
+    <Link to={`/profile/${this.props.profile.id}/following`}><h1>Following: {this.props.profile.following.length}</h1></Link> :
+    <h1>LOADING...</h1>}
+  </Segment>
         </Grid.Column>
         <Grid.Column>
           <Segment>
@@ -106,27 +121,10 @@ class UserProfile extends Component {
             {this.props.categories ? <UserBarData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
           </Segment>
         </Grid.Column>
-          <Grid.Column>
-            <Segment>
-        <h5>{this.props.profile.first_name}</h5>
-        <h5>{this.props.profile.last_name}</h5>
-        <h1>Email: {this.props.profile.email}</h1>
-      </Segment>
-      {this.hideButtons()}
-    {/* <div>
-      <UserEvents userEvents={this.props.profile}/>
-    </div> */}
-    {/* <div>
-      {this.props.categories ? <UserData categoryArray={this.props.categories} userInfo={this.props.profile}/> : <h1>LOADING...</h1>}
-    </div> */}
-    <Segment>
-      {this.props.profile ?
-        <Link to={`/profile/${this.props.profile.id}/followers`}><h1>Followers: {this.props.profile.followers.length}</h1></Link> :
-    <h1>LOADING...</h1>}
-    {this.props.profile ?
-    <Link to={`/profile/${this.props.profile.id}/following`}><h1>Following: {this.props.profile.following.length}</h1></Link> :
-    <h1>LOADING...</h1>}
-  </Segment>
+        <Grid.Column>
+        <Segment compact>
+          <UserEvents userEvents={this.props.profile}/>
+        </Segment>
 </Grid.Column>
 </Grid.Row>
 </Grid>

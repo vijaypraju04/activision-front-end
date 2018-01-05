@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchUserData } from '../actions'
 import withAuth from '../hocs/withAuth';
+import { Card, Icon, Image } from 'semantic-ui-react'
 
 class UserFollowings extends Component {
 
@@ -17,9 +18,25 @@ class UserFollowings extends Component {
   renderFollowings() {
     return this.props.profile.following.map((following) => {
         return (
-      <Link to={`/profile/${following.id}`}>
+          <Card>
+        <Image src={following.picture}/>
+        <Card.Content>
+          <Card.Header>
+        {following.first_name} {following.last_name}
+      </Card.Header>
+      <Card.Meta>
+        <Link to={`/profile/${following.id}`}>
         {following.username}
-      </Link>
+        </Link>
+      </Card.Meta>
+    </Card.Content>
+      <Card.Content extra>
+        <a>
+          <Icon name='user' />
+        {following.email}
+      </a>
+    </Card.Content>
+  </Card>
     )
     })
   }
@@ -44,16 +61,8 @@ class UserFollowings extends Component {
 
   return (
     <div>
-      <div>
-        <div className="text-sx-right">
         <h3> Following Users </h3>
-          <ul className="list-group">
             {this.renderFollowings()}
-          </ul>
-      </div>
-    </div>
-    {/* <h3> Following Count: {props.followData.following.length} </h3> */}
-    {/* <h5>{followings}</h5> */}
   </div>
 
   )

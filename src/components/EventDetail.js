@@ -65,7 +65,7 @@ class EventDetail extends Component {
       </Segment>
     </Grid.Column>
     <Grid.Column>
-      <Segment>
+      <Segment compact>
         <EventUserList userList={this.props.event.users}/>
       </Segment>
     </Grid.Column>

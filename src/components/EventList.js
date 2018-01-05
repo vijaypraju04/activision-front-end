@@ -28,7 +28,7 @@ class EventList extends Component {
         </Item.Description>
         <Item.Extra>
           <Link to={`/events/${event.id}`}>
-  <Button primary floated='right'>
+  <Button primary floated='center'>
     Interested
     <Icon name='right chevron' />
   </Button>

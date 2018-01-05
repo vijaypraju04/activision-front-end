@@ -108,7 +108,7 @@ return newObjValues
 
   return (
   		<div>
-  			<Pie data={data} options={options} />
+  			<Pie data={data} options={options} width={200} height={100} />
   		</div>
   	)
 
