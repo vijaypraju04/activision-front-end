@@ -8,7 +8,7 @@ import UserBarData from './UserDataBar'
 import UserFollowers from './UserFollowers'
 import UserFollowings from './UserFollowings'
 import { fetchUserData, followUser, removeFollow, fetchCategoryList} from '../actions'
-import { Grid, Segment, Image, Header } from 'semantic-ui-react'
+import { Grid, Segment, Image, Header, Button } from 'semantic-ui-react'
 
 class UserProfile extends Component {
 
@@ -49,9 +49,11 @@ class UserProfile extends Component {
       )
     } else {
       return (
-        <Segment>
-            <button onClick={this.addFollow}>Follow</button>
-            <button onClick={this.removeUserFollow}>Unfollow</button>
+        <Segment >
+          <Button.Group size="large">
+            <Button basic color="red" onClick={this.addFollow}>Follow</Button>
+            <Button basic color="blue" onClick={this.removeUserFollow}>Unfollow</Button>
+          </Button.Group>
           </Segment>
         )
     }
